@@ -3,6 +3,18 @@ from fastapi import APIRouter
 from services.aircom import *
 # import ฟังก์ชันดึงข้อมูลของคุณมาที่นี่
 # from services.data_service import fetch_aircom_today, fetch_aircom_weekly, fetch_aircom_monthly
+import math
+
+def clean_nan(obj):
+    """ฟังก์ชันทำความสะอาดข้อมูล: เปลี่ยน NaN ให้เป็น 0.0 เพื่อไม่ให้ JSON พัง"""
+    if isinstance(obj, list):
+        return [clean_nan(i) for i in obj]
+    elif isinstance(obj, dict):
+        return {k: clean_nan(v) for k, v in obj.items()}
+    elif isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return 0.0  # บังคับให้เป็น 0.0
+    return obj
 
 router = APIRouter(
     prefix="/api/aircom", # กำหนด Prefix เริ่มต้นของทุก Route ในไฟล์นี้

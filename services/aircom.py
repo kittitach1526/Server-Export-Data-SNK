@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from collections import defaultdict
 import pandas as pd
 
-MONGO_URI = "mongodb://localhost:27017"
+MONGO_URI = "mongodb://192.168.100.198:27017"
 DB_NAME = "SNK-MQTT"
 
 def fetch_aircom_today(condition :str):
