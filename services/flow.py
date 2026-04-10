@@ -4,8 +4,12 @@ from datetime import datetime, timezone
 from collections import defaultdict
 import pandas as pd
 
-MONGO_URI = "mongodb://192.168.100.198:27017"
-DB_NAME = "SNK-MQTT"
+import services.read_config as rc
+
+# MONGO_URI = "mongodb://192.168.100.198:27017"
+MONGO_URI= rc.read("database","url")
+# DB_NAME = "SNK-MQTT"
+DB_NAME = rc.read("database","collection_name")
 
 
 def fetch_flow_today(condition :str):
