@@ -12,7 +12,7 @@ MONGO_URI= rc.read("database","url")
 DB_NAME = rc.read("database","collection_name")
 
 
-def fetch_flow_today(condition :str):
+def fetch_flow_today(condition :str, limit=100):
     client = MongoClient(MONGO_URI)
     db = client[DB_NAME]
     collections = [c for c in db.list_collection_names() if c.startswith("flow")]
@@ -26,10 +26,15 @@ def fetch_flow_today(condition :str):
     # --- ส่วนการดึงและ Merge ข้อมูล (คงเดิมไว้ทั้งหมด) ---
     for col_name in collections:
         col = db[col_name]
-        data = list(col.find({
+        query = col.find({
             "timestamp": {"$gte": start_of_day, "$lte": end_of_day},
             "line": condition
-        }, {"_id": 0}))
+        }, {"_id": 0}).sort("timestamp", -1)
+        
+        if limit is not None:
+            query = query.limit(limit)
+            
+        data = list(query)
 
         for d in data:
             ts = d.get("timestamp")
@@ -71,7 +76,7 @@ def fetch_flow_today(condition :str):
 
     return clean_data, final_column_order
 
-def fetch_flow_weekly(condition: str):
+def fetch_flow_weekly(condition: str, limit=100):
 
     client = MongoClient(MONGO_URI)
     db = client[DB_NAME]
@@ -86,10 +91,15 @@ def fetch_flow_weekly(condition: str):
 
     for col_name in collections:
         col = db[col_name]
-        data = list(col.find({
+        query = col.find({
             "timestamp": {"$gte": start_of_week, "$lte": end_of_period},
             "line": condition
-        }, {"_id": 0}))
+        }, {"_id": 0}).sort("timestamp", -1)
+        
+        if limit is not None:
+            query = query.limit(limit)
+            
+        data = list(query)
 
         for d in data:
             ts = d.get("timestamp")
@@ -119,6 +129,7 @@ def fetch_flow_weekly(condition: str):
     
     # กรองเอาเฉพาะที่มีอยู่จริง และเรียงส่วนที่เหลือ (AC parameters) ตามตัวอักษร
     existing_priority = [c for c in priority_cols if c in all_columns]
+    # คอลัมน์ที่เหลือให้เรียงตามตัวอักษร (A-Z)
     other_cols = sorted([c for c in all_columns if c not in existing_priority])
     
     final_column_order = existing_priority + other_cols
@@ -132,7 +143,7 @@ def fetch_flow_weekly(condition: str):
 
     return clean_data, final_column_order
 
-def fetch_flow_monthly(condition: str):
+def fetch_flow_monthly(condition: str, limit=100):
     client = MongoClient(MONGO_URI)
     db = client[DB_NAME]
     collections = [c for c in db.list_collection_names() if c.startswith("flow")]
@@ -147,10 +158,15 @@ def fetch_flow_monthly(condition: str):
 
     for col_name in collections:
         col = db[col_name]
-        data = list(col.find({
+        query = col.find({
             "timestamp": {"$gte": start_of_month, "$lte": end_of_period},
             "line": condition
-        }, {"_id": 0}))
+        }, {"_id": 0}).sort("timestamp", -1)
+        
+        if limit is not None:
+            query = query.limit(limit)
+            
+        data = list(query)
 
         for d in data:
             ts = d.get("timestamp")

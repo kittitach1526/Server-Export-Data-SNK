@@ -10,7 +10,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from routes import aircom,power,flow,pressure
+from routes import aircom,power,flow,pressure,export_csv
 
 
 app = FastAPI(title="Aircom Data API")
@@ -27,6 +27,7 @@ app.include_router(aircom.router)
 app.include_router(power.router)
 app.include_router(flow.router)
 app.include_router(pressure.router)
+app.include_router(export_csv.router)
 
 @app.get("/")
 async def root():

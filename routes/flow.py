@@ -30,7 +30,7 @@ async def get_flow_5_5_today():
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-6-5-today")
@@ -42,7 +42,7 @@ async def get_flow_6_5_today():
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-7-today")
@@ -54,7 +54,7 @@ async def get_flow_7_today():
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": data
+        "data": clean_nan(data)
     }
 
 
@@ -67,7 +67,7 @@ async def get_flow_5_5_week():
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-6-5-week")
@@ -79,7 +79,7 @@ async def get_flow_6_5_week():
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-7-week")
@@ -91,7 +91,7 @@ async def get_flow_7_week():
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-5-5-month")
@@ -102,7 +102,7 @@ async def get_flow_monthly_data_5_5():
         "month": datetime.now().strftime("%B %Y"),
         "count": len(data),
         "columns": cols,
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-6-5-month")
@@ -113,7 +113,7 @@ async def get_flow_monthly_data_6_5():
         "month": datetime.now().strftime("%B %Y"),
         "count": len(data),
         "columns": cols,
-        "data": data
+        "data": clean_nan(data)
     }
 
 @router.get("/flow-7-month")
@@ -124,5 +124,5 @@ async def get_flow_monthly_data_7():
         "month": datetime.now().strftime("%B %Y"),
         "count": len(data),
         "columns": cols,
-        "data": data
+        "data": clean_nan(data)
     }
