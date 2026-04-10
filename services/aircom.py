@@ -1,4 +1,4 @@
-
+import numpy as np # อย่าลืม import numpy ไว้ด้านบนสุด
 from datetime import timedelta
 from pymongo import MongoClient
 from datetime import datetime, timezone
@@ -59,6 +59,7 @@ def fetch_aircom_today(condition: str, limit=100):
     
     # เปลี่ยน NaN เป็น None เพื่อให้ API ส่งค่า null ได้ถูกต้อง
     clean_data = df.where(pd.notnull(df), None).to_dict(orient='records')
+    clean_data = df.replace({np.nan: None}).to_dict(orient='records')
 
     return clean_data, final_column_order
     
@@ -111,6 +112,7 @@ def fetch_aircom_weekly(condition: str, limit=500):
     # 6. Reindex และแปลงเป็น List of Dict
     df = df.reindex(columns=final_column_order)
     clean_data = df.where(pd.notnull(df), None).to_dict(orient='records')
+    clean_data = df.replace({np.nan: None}).to_dict(orient='records')
 
     return clean_data, final_column_order
 
@@ -163,5 +165,6 @@ def fetch_aircom_monthly(condition: str, limit=1000):
     # 6. Reindex และจัดการค่าว่าง (NaN -> None)
     df = df.reindex(columns=final_column_order)
     clean_data = df.where(pd.notnull(df), None).to_dict(orient='records')
+    clean_data = df.replace({np.nan: None}).to_dict(orient='records')
 
     return clean_data, final_column_order
