@@ -24,105 +24,105 @@ router = APIRouter(
 @router.get("/pressure-5-5-today")
 async def get_pressure_5_5_today():
     # รับค่า 2 อย่างคือ ข้อมูลที่เรียงแล้ว และ รายชื่อหัวตารางที่เรียงแล้ว
-    data, sorted_columns = fetch_pressure_today("5.5")
+    data, sorted_columns = fetch_pressure_today(condition="pressure_55",limit=None)
     
     return {
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-6-5-today")
 async def get_pressure_6_5_today():
     # รับค่า 2 อย่างคือ ข้อมูลที่เรียงแล้ว และ รายชื่อหัวตารางที่เรียงแล้ว
-    data, sorted_columns = fetch_pressure_today("6.5")
+    data, sorted_columns = fetch_pressure_today(condition="pressure_65",limit=None)
     
     return {
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-7-today")
 async def get_pressure_7_today():
     # รับค่า 2 อย่างคือ ข้อมูลที่เรียงแล้ว และ รายชื่อหัวตารางที่เรียงแล้ว
-    data, sorted_columns = fetch_pressure_today("7")
+    data, sorted_columns = fetch_pressure_today(condition="pressure_7",limit=None)
     
     return {
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": clean_nan(data)
+        "data": data
     }
 
 
 @router.get("/pressure-5-5-week")
 async def get_pressure_5_5_week():
     # รับค่า 2 อย่างคือ ข้อมูลที่เรียงแล้ว และ รายชื่อหัวตารางที่เรียงแล้ว
-    data, sorted_columns = fetch_pressure_weekly("5.5")
+    data, sorted_columns = fetch_pressure_weekly(condition="pressure_55",limit=None)
     
     return {
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-6-5-week")
 async def get_pressure_6_5_week():
     # รับค่า 2 อย่างคือ ข้อมูลที่เรียงแล้ว และ รายชื่อหัวตารางที่เรียงแล้ว
-    data, sorted_columns = fetch_pressure_weekly("6.5")
+    data, sorted_columns = fetch_pressure_weekly(condition="pressure_65",limit=None)
     
     return {
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-7-week")
 async def get_pressure_7_week():
     # รับค่า 2 อย่างคือ ข้อมูลที่เรียงแล้ว และ รายชื่อหัวตารางที่เรียงแล้ว
-    data, sorted_columns = fetch_pressure_weekly("7")
+    data, sorted_columns = fetch_pressure_weekly(condition="pressure_7",limit=None)
     
     return {
         "status": "success",
         "count": len(data),
         "columns": sorted_columns, 
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-5-5-month")
 async def get_pressure_monthly_data_5_5():
-    data, cols = fetch_pressure_monthly("5.5")
+    data, cols = fetch_pressure_monthly(condition="pressure_55",limit=None)
     return {
         "status": "success",
         "month": datetime.now().strftime("%B %Y"),
         "count": len(data),
         "columns": cols,
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-6-5-month")
 async def get_pressure_monthly_data_6_5():
-    data, cols = fetch_pressure_monthly("6.5")
+    data, cols = fetch_pressure_monthly(condition="pressure_65",limit=None)
     return {
         "status": "success",
         "month": datetime.now().strftime("%B %Y"),
         "count": len(data),
         "columns": cols,
-        "data": clean_nan(data)
+        "data": data
     }
 
 @router.get("/pressure-7-month")
 async def get_pressure_monthly_data_7():
-    data, cols = fetch_pressure_monthly("7")
+    data, cols = fetch_pressure_monthly(condition="pressure_7",limit=None)
     return {
         "status": "success",
         "month": datetime.now().strftime("%B %Y"),
         "count": len(data),
         "columns": cols,
-        "data": clean_nan(data)
+        "data": data
     }
