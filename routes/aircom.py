@@ -4,6 +4,7 @@ from services.aircom import *
 # import ฟังก์ชันดึงข้อมูลของคุณมาที่นี่
 # from services.data_service import fetch_aircom_today, fetch_aircom_weekly, fetch_aircom_monthly
 import math
+from typing import Optional
 
 def clean_nan(obj):
     """ฟังก์ชันทำความสะอาดข้อมูล: เปลี่ยน NaN ให้เป็น 0.0 เพื่อไม่ให้ JSON พัง"""
@@ -127,3 +128,24 @@ async def get_monthly_data_7():
         "data": data
     }
 
+@router.get("/api/aircom/export")
+async def export_aircom_data(
+    condition: str, 
+    start_date: Optional[str] = None, 
+    end_date: Optional[str] = None
+):
+    try:
+        # เรียกใช้ฟังก์ชันที่ปรับปรุงไว้ด้านบน
+        data, columns = fetch_aircom_range(condition, start_date, end_date)
+        
+        return {
+            "status": "success",
+            "data": data,
+            "columns": columns,
+            "count": len(data)
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
